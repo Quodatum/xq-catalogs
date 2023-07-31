@@ -1,0 +1,11 @@
+.git*
+.settings/
+tests/
+scripts/
+packages.src/
+docs/
+.DS_Store
+.vscode
+*.tgz
+.eslintrc.json
+.jshint*

@@ -1,0 +1,28 @@
+{
+  "name": "@quodatum/xq-catalogs",
+  "version": "0.0.1",
+  "description": "XQuery namespace and module library definitions as JSON",
+  "main": "lib/index.js",
+  "keywords": [
+    "xquery"
+  ],
+  "author": "Quodatum",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/quodatum/xq-catalogs.git"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "lint": "eslint . --fix",
+    "test": "node tests/basic-test.js "
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=0.1.90"
+  },
+  "devDependencies": {
+    "@quodatum/xqlint": "^0.2.5",
+    "@types/node": "^20.4.5",
+    "eslint": "^8.10.0"
+  }
+}
