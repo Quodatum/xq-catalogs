@@ -6,7 +6,7 @@ var processors = {
     'xpath-3.1': { 'src': 'packages.src/xpath-3.1' }
 };
 
-var out = 'src/packages/';
+var out = 'lib/packages/';
 
 var path = require('path');
 var fs = require('fs');
@@ -52,6 +52,7 @@ function importMods(files) {
     });
     return result;
 };
+
 function keyed(arr){
  const obj={};
  arr.forEach(f=>obj[f.key]=f);
