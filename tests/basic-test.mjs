@@ -1,6 +1,6 @@
 // smoke test
 import assert from "assert";
-import {names,processor} from "../lib/index.js";
+import {names,processor} from "../index.js";
 
 const plist=names();
 console.log("processors: ",plist);

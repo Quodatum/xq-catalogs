@@ -1,8 +1,9 @@
 {
   "name": "@quodatum/xq-catalogs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "XQuery namespace and module library definitions as JSON",
-  "main": "lib/index.js",
+  "main": "index.js",
+  "files": ["packages"],
   "keywords": [
     "xquery"
   ],
@@ -14,15 +15,18 @@
   "license": "Apache-2.0",
   "scripts": {
     "lint": "eslint . --fix",
-    "test": "node tests/basic-test.js "
+    "test": "node tests/basic-test.mjs ",
+    "wiki-scrape": "basex scripts/wiki-scrape.xq",
+    "test-compile": "tsc -p ./",
+    "compile": "tsc -p ./"
   },
-  "type": "module",
   "engines": {
-    "node": ">=0.1.90"
+    "node": ">=18.1.1"
   },
   "devDependencies": {
     "@quodatum/xqlint": "^0.2.5",
     "@types/node": "^20.4.5",
-    "eslint": "^8.10.0"
+    "eslint": "^8.10.0",
+    "typescript": "^5.1.6"
   }
 }

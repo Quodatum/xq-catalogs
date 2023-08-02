@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "moduleResolution": "Node",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "forceConsistentCasingInFileNames": true,
+        "declaration": true
+    },
+  
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Recommended",
+    "exclude": [
+        "node_modules",
+        ".vscode-test",
+        "out/**/*"
+    ]
+}
