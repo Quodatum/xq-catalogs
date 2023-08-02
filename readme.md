@@ -2,6 +2,7 @@
 
 XQuery namespace and module library definitions as JSON. 
 
+[npm](https://www.npmjs.com/package/@quodatum/xq-catalogs)
 ## API
 ### names()
 returns string array of processor names.
