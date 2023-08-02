@@ -1,7 +1,6 @@
-type Processor = {
-    name: string;
-    namespaces: object;
+type NSlibrary = {
+    [key: string]: {};
 };
-declare function processor(name: string): Processor;
+declare function library(name: string): NSlibrary;
 declare function names(): string[];
-export { names, processor };
+export { names, library };

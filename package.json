@@ -1,6 +1,6 @@
 {
   "name": "@quodatum/xq-catalogs",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "XQuery namespace and module library definitions as JSON",
   "main": "index.js",
   "files": ["packages"],

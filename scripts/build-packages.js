@@ -6,7 +6,7 @@ var processors = {
     'xpath-3.1': { 'src': 'packages.src/xpath-3.1' }
 };
 
-var out = 'lib/packages/';
+var out = 'packages/';
 
 var path = require('path');
 var fs = require('fs');

@@ -4,14 +4,14 @@ import { readFileSync } from "fs";
 // Will contain trailing slash
 // const __dirname = new URL('.', import.meta.url).pathname;
 
-type  Processor ={
-    name:string,
-    namespaces:object
-};
-var lastns:Processor|null=null;
+type  NSlibrary ={[key: string]:{}};
 
-function processor(name:string):Processor {
-    if(lastns && lastns.name=== name) return lastns;
+// cache last used
+var lastName:string="";
+var lastNS:NSlibrary={};
+
+function library(name:string):NSlibrary {
+    if(lastName=== name) {return lastNS;}
     const processors = loadjson("./processors.json");
     const ns = {};
     if (processors.hasOwnProperty(name)) {
@@ -25,11 +25,9 @@ function processor(name:string):Processor {
         });
         //console.timeEnd("namespaces: "+name)
     };
-    lastns={
-        name: name,
-        namespaces: ns
-    };
-    return lastns
+    lastNS=ns;
+    lastName=name;
+    return ns;
 };
 
 function names() :string[]{
@@ -39,7 +37,7 @@ function names() :string[]{
 
 // for every namespace key in package create module entry in namespaces
 function loadpackage(namespaces:{[key: string]:{}}, pkg:{}) {
-    for (const [ns, value] of  (Object.entries(pkg) as [string, any][])) {
+    for (const [ns, value] of  (Object.entries(pkg) as [string, object][])) {
         //   if (namespaces.hasOwnProperty(ns)) console.log("existing: " + ns);
         namespaces[ns] = value;
     }
@@ -52,4 +50,4 @@ function loadjson(path:string) {
     return JSON.parse(readFileSync(p, 'utf8'));
 };
 
-export { names, processor };
+export { names, library };

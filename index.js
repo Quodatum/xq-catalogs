@@ -1,12 +1,15 @@
 "use strict";
 // loads processor list and can build namespace object for items on list
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.processor = exports.names = void 0;
+exports.library = exports.names = void 0;
 var fs_1 = require("fs");
-var lastns = null;
-function processor(name) {
-    if (lastns && lastns.name === name)
-        return lastns;
+// cache last used
+var lastName = "";
+var lastNS = {};
+function library(name) {
+    if (lastName === name) {
+        return lastNS;
+    }
     var processors = loadjson("./processors.json");
     var ns = {};
     if (processors.hasOwnProperty(name)) {
@@ -20,13 +23,11 @@ function processor(name) {
         //console.timeEnd("namespaces: "+name)
     }
     ;
-    lastns = {
-        name: name,
-        namespaces: ns
-    };
-    return lastns;
+    lastNS = ns;
+    lastName = name;
+    return ns;
 }
-exports.processor = processor;
+exports.library = library;
 ;
 function names() {
     var processors = loadjson("./processors.json");
