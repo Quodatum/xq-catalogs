@@ -14,7 +14,7 @@ Currently just:
 ### library(processor)
 returns object describing namespaces and modules available for processor
 
-Format subject to change, something like..
+This is the xqdoc like format where var/fns are objects. Format subject to change, something like..
 ```json
 "http://basex.org": {
         "description": "BaseX Annotations, Pragmas, …",

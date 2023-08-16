@@ -12,7 +12,7 @@ var path = require('path');
 var fs = require('fs');
 var ffs = require('final-fs');
 
-var XQLint = require('@quodatum/xqlint');
+var XQLint = require('@quodatum/xqlint').XQLint;
 
 var getFiles = function (p) {
     p = path.resolve(path.normalize(p));
@@ -35,7 +35,7 @@ function importMods(files) {
     var result = {};
     files.forEach(function (file) {
         console.log("processing..", file);
-        const lintOpts={ styleCheck: false, fileName: file, processor: "" }
+        const lintOpts={ styleCheck: false, fileName: file }
         var linter = new XQLint(fs.readFileSync(file, 'utf-8'), lintOpts);
         var syntaxError = linter.hasSyntaxError();
         if (syntaxError) {
