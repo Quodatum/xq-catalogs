@@ -203,13 +203,13 @@ declare function bin:decode-string($in as xs:base64Binary?, $encoding as xs:stri
  : Encodes a string into binary data using a given <code>$encoding</code>.<br/>If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
  :
  : @param $in value of type xs:string?
- : @param $encoding value of type xs:string
+ : @param $encoding value of type xs:string default 'utf-8'
  : @return value of type xs:base64Binary?
  : @error bin:unknown-encoding the specified encoding is unknown.
  : @error bin:conversion-error an error or malformed input occurred during encoding the string.
  :)
 declare function bin:encode-string($in as xs:string?, $encoding as xs:string) as xs:base64Binary? external;
-
+declare function bin:encode-string($in as xs:string?) as xs:base64Binary? external;
 (:~ 
  : Returns the 8-octet binary representation of a double value.<br/>Most-significant-octet-first number representation is assumed unless the <code>$octet-order</code> parameter is specified.
  :
