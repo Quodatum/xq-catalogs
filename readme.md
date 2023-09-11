@@ -5,13 +5,32 @@ XQuery namespace and module library definitions as JSON.
 [npm](https://www.npmjs.com/package/@quodatum/xq-catalogs)
 ## API
 ### profiles()
-returns string array of processor names.
+returns array of Profiles defined in profiles.json.
+```json
+[
+   {
+      "id": "basex-10",
+      "description": "BaseX 10.6 features",
+      "modules": [
+         "packages/basex-static-namespaces.json",
+         "packages/xpath-3.1.json",
+         "packages/basex-10.6.json"
+      ]
+   },
+   {
+      "id": "basex-9",
+      "description": "BaseX 9.7 features",
+      "modules": [
+         "packages/basex-static-namespaces.json",
+         "packages/xpath-3.1.json",
+         "packages/basex-9.7.json"
+      ]
+   },
+  ...
+]
+```
 
-Currently just:
-* basex-9
-* basex-10
-
-### library(processor)
+### library(profile)
 returns object describing namespaces and modules available for processor
 
 This is the xqdoc like format where var/fns are objects. Format subject to change, something like..
