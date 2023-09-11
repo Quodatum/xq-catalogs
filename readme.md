@@ -62,3 +62,7 @@ This is the xqdoc like format where var/fns are objects. Format subject to chang
 ```
 ## Dev notes
 `index.ts` is source. `tsc` is used to compile to into a "commonjs" module for now.
+
+### sources files
+The npm script `wiki-scrape` creates stub xqm files below `packages.src` from the BaseX wiki.
+

@@ -17,6 +17,7 @@
     "lint": "eslint . --fix",
     "test": "node tests/basic-test.mjs ",
     "wiki-scrape": "%BASEX-10% scripts/wiki-scrape.xq",
+    "build-packages": "node scripts/build-packages.js",
     "test-compile": "tsc -p ./",
     "compile": "tsc -p ./"
   },

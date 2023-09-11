@@ -731,6 +731,15 @@
     "type": "xs:base64Binary?",
     "description": " Encodes a string into binary data using a given <code>$encoding</code>.<br/>If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence."
    },
+   "http://expath.org/ns/binary#encode-string#1": {
+    "name": "encode-string",
+    "uri": "http://expath.org/ns/binary",
+    "key": "http://expath.org/ns/binary#encode-string#1",
+    "params": [
+     "$in as xs:string?"
+    ],
+    "type": "xs:base64Binary?"
+   },
    "http://expath.org/ns/binary#pack-double#1": {
     "name": "pack-double",
     "uri": "http://expath.org/ns/binary",
