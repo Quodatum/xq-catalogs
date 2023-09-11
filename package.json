@@ -1,9 +1,9 @@
 {
   "name": "@quodatum/xq-catalogs",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "XQuery namespace and module library definitions as JSON",
   "main": "index.js",
-  "files": ["processors.json","packages"],
+  "files": ["profiles.json","packages"],
   "keywords": [
     "xquery"
   ],
@@ -16,7 +16,7 @@
   "scripts": {
     "lint": "eslint . --fix",
     "test": "node tests/basic-test.mjs ",
-    "wiki-scrape": "basex scripts/wiki-scrape.xq",
+    "wiki-scrape": "%BASEX-10% scripts/wiki-scrape.xq",
     "test-compile": "tsc -p ./",
     "compile": "tsc -p ./"
   },

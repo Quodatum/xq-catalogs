@@ -1,7 +1,7 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for retrieving information on an HTTP request that has triggered the query. It is mostly useful when building <a href="https://docs.basex.org/wiki/Web_Application">Web Applications</a>.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Request_Module
  :)
 module namespace request = "http://exquery.org/ns/request";
@@ -137,9 +137,9 @@ declare function request:header($name as xs:string) as xs:string? external;
  :
  : @param $name value of type xs:string
  : @param $default value of type xs:string
- : @return value of type xs:string
+ : @return value of type xs:string?
  :)
-declare function request:header($name as xs:string, $default as xs:string) as xs:string external;
+declare function request:header($name as xs:string, $default as xs:string) as xs:string? external;
 
 (:~ 
  : Returns the names of all cookies in the HTTP headers available from the HTTP request. If <a href="https://docs.basex.org/wiki/RESTXQ">RESTXQ</a> is used, this function can be used to access cookies that have not been statically bound by <a href="https://docs.basex.org/wiki/RESTXQ#Cookies">%rest:cookie-param</a>.
@@ -161,9 +161,9 @@ declare function request:cookie($name as xs:string) as xs:string? external;
  :
  : @param $name value of type xs:string
  : @param $default value of type xs:string
- : @return value of type xs:string
+ : @return value of type xs:string?
  :)
-declare function request:cookie($name as xs:string, $default as xs:string) as xs:string external;
+declare function request:cookie($name as xs:string, $default as xs:string) as xs:string? external;
 
 (:~ 
  : Returns the names of all HTTP request attributes.
@@ -194,5 +194,6 @@ declare function request:attribute($name as xs:string, $default as item()*) as i
  :
  : @param $name value of type xs:string
  : @param $value value of type item()*
+ : @return value of type empty-sequence()
  :)
 declare function request:set-attribute($name as xs:string, $value as item()*) as empty-sequence() external;

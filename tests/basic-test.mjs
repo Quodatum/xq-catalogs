@@ -1,8 +1,8 @@
 // smoke test
 import assert from "assert";
-import {names,library} from "../index.js";
+import {profiles,library} from "../index.js";
 
-const plist=names();
+const plist=profiles();
 console.log("processors: ",plist);
 assert.ok(plist.length>0);
 

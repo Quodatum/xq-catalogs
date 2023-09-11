@@ -1,7 +1,7 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> provides functions for displaying information stored in the database index structures.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Index_Module
  :)
 module namespace index = "http://basex.org/modules/index";
@@ -26,7 +26,7 @@ declare function index:facets($db as xs:string) as xs:string external;
 declare function index:facets($db as xs:string, $type as xs:string) as xs:string external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified entry.
  :
  : @param $db value of type xs:string
  : @return value of type element(value)*
@@ -36,7 +36,7 @@ declare function index:facets($db as xs:string, $type as xs:string) as xs:string
 declare function index:texts($db as xs:string) as element(value)* external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified entry.
  :
  : @param $db value of type xs:string
  : @param $prefix value of type xs:string
@@ -47,19 +47,19 @@ declare function index:texts($db as xs:string) as element(value)* external;
 declare function index:texts($db as xs:string, $prefix as xs:string) as element(value)* external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Text_Index">Text Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified entry.
  :
  : @param $db value of type xs:string
- : @param $start value of type xs:string
- : @param $ascending value of type xs:boolean
+ : @param $prefix value of type xs:string
+ : @param $ascending value of type xs:boolean?
  : @return value of type element(value)*
  : @error db:get The addressed database does not exist or could not be opened.
  : @error db:no-index the index is not available.
  :)
-declare function index:texts($db as xs:string, $start as xs:string, $ascending as xs:boolean) as element(value)* external;
+declare function index:texts($db as xs:string, $prefix as xs:string, $ascending as xs:boolean?) as element(value)* external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
  :
  : @param $db value of type xs:string
  : @return value of type element(value)*
@@ -69,7 +69,7 @@ declare function index:texts($db as xs:string, $start as xs:string, $ascending a
 declare function index:attributes($db as xs:string) as element(value)* external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
  :
  : @param $db value of type xs:string
  : @param $prefix value of type xs:string
@@ -80,16 +80,16 @@ declare function index:attributes($db as xs:string) as element(value)* external;
 declare function index:attributes($db as xs:string, $prefix as xs:string) as element(value)* external;
 
 (:~ 
- : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$start</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
+ : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Attribute_Index">Attribute Index</a> of the database <code>$db</code>, along with their number of occurrences.<br/>If <code>$prefix</code> is specified, the returned entries will be refined to the ones starting with that prefix.<br/>If <code>$prefix</code> and <code>$ascending</code> are specified, all nodes will be returned after or before the specified start entry.
  :
  : @param $db value of type xs:string
- : @param $start value of type xs:string
- : @param $ascending value of type xs:boolean
+ : @param $prefix value of type xs:string
+ : @param $ascending value of type xs:boolean?
  : @return value of type element(value)*
  : @error db:get The addressed database does not exist or could not be opened.
  : @error db:no-index the index is not available.
  :)
-declare function index:attributes($db as xs:string, $start as xs:string, $ascending as xs:boolean) as element(value)* external;
+declare function index:attributes($db as xs:string, $prefix as xs:string, $ascending as xs:boolean?) as element(value)* external;
 
 (:~ 
  : Returns all strings stored in the <a href="https://docs.basex.org/wiki/Indexes#Token_Index">Token Index</a> of the database <code>$db</code>, along with their number of occurrences.

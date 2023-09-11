@@ -1,13 +1,13 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions to process binary data, including extracting subparts, searching, basic binary operations and conversion between binary and structured forms.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Binary_Module
  :)
 module namespace bin = "http://expath.org/ns/binary";
 
 (:~ 
- : Returns the binary form of the set of octets written as a sequence of (ASCII) hex digits ([0-9A-Fa-f]).<br/> <code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets, i.e. an even number of hexadecimal digits. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
+ : Returns the binary form of the set of octets written as a sequence of (ASCII) hex digits ([0-9A-Fa-f]).<br/><code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets, i.e. an even number of hexadecimal digits. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
  :
  : @param $in value of type xs:string?
  : @return value of type xs:base64Binary?
@@ -16,7 +16,7 @@ module namespace bin = "http://expath.org/ns/binary";
 declare function bin:hex($in as xs:string?) as xs:base64Binary? external;
 
 (:~ 
- : Returns the binary form of the set of octets written as a sequence of (8-wise) (ASCII) binary digits ([01]).<br/> <code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
+ : Returns the binary form of the set of octets written as a sequence of (8-wise) (ASCII) binary digits ([01]).<br/><code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
  :
  : @param $in value of type xs:string?
  : @return value of type xs:base64Binary?
@@ -25,7 +25,7 @@ declare function bin:hex($in as xs:string?) as xs:base64Binary? external;
 declare function bin:bin($in as xs:string?) as xs:base64Binary? external;
 
 (:~ 
- : Returns the binary form of the set of octets written as a sequence of (ASCII) octal digits ([0-7]).<br/> <code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
+ : Returns the binary form of the set of octets written as a sequence of (ASCII) octal digits ([0-7]).<br/><code>$in</code> will be effectively zero-padded from the left to generate an integral number of octets. If <code>$in</code> is an empty string, then the result will be an <code>xs:base64Binary</code> with no embedded data. Byte order in the result follows (per-octet) character order in the string. If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
  :
  : @param $in value of type xs:string?
  : @return value of type xs:base64Binary?
@@ -161,6 +161,18 @@ declare function bin:find($in as xs:base64Binary?, $offset as xs:integer, $searc
  : Decodes binary data as a string in a given <code>$encoding</code>.<br/>If <code>$offset</code> and <code>$size</code> are provided, the <code>$size</code> octets from <code>$offset</code> are decoded. If <code>$offset</code> alone is provided, octets from <code>$offset</code> to the end are decoded.If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
  :
  : @param $in value of type xs:base64Binary?
+ : @return value of type xs:string?
+ : @error bin:negative-size the specified size is negative.
+ : @error bin:index-out-of-range the specified offset + size is out of range.
+ : @error bin:unknown-encoding the specified encoding is unknown.
+ : @error bin:conversion-error an error or malformed input occurred during decoding the string.
+ :)
+declare function bin:decode-string($in as xs:base64Binary?) as xs:string? external;
+
+(:~ 
+ : Decodes binary data as a string in a given <code>$encoding</code>.<br/>If <code>$offset</code> and <code>$size</code> are provided, the <code>$size</code> octets from <code>$offset</code> are decoded. If <code>$offset</code> alone is provided, octets from <code>$offset</code> to the end are decoded.If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
+ :
+ : @param $in value of type xs:base64Binary?
  : @param $encoding value of type xs:string
  : @return value of type xs:string?
  : @error bin:negative-size the specified size is negative.
@@ -198,6 +210,16 @@ declare function bin:decode-string($in as xs:base64Binary?, $encoding as xs:stri
  : @error bin:conversion-error an error or malformed input occurred during decoding the string.
  :)
 declare function bin:decode-string($in as xs:base64Binary?, $encoding as xs:string, $offset as xs:integer, $size as xs:integer) as xs:string? external;
+
+(:~ 
+ : Encodes a string into binary data using a given <code>$encoding</code>.<br/>If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.
+ :
+ : @param $in value of type xs:string?
+ : @return value of type xs:base64Binary?
+ : @error bin:unknown-encoding the specified encoding is unknown.
+ : @error bin:conversion-error an error or malformed input occurred during encoding the string.
+ :)
+declare function bin:encode-string($in as xs:string?) as xs:base64Binary? external;
 
 (:~ 
  : Encodes a string into binary data using a given <code>$encoding</code>.<br/>If the value of <code>$in</code> is the empty sequence, the function returns an empty sequence.

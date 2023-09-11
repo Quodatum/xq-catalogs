@@ -1,7 +1,7 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> provides functions that perform different hash operations.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Hashing_Module
  :)
 module namespace hash = "http://basex.org/modules/hash";
