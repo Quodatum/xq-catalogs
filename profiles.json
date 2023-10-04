@@ -5,7 +5,7 @@
       "modules": [
          "packages/basex-static-namespaces.json",
          "packages/xpath-3.1.json",
-         "packages/basex-10.6.json"
+         "packages/basex-10.json"
       ]
    },
    {
@@ -14,7 +14,7 @@
       "modules": [
          "packages/basex-static-namespaces.json",
          "packages/xpath-3.1.json",
-         "packages/basex-9.7.json"
+         "packages/basex-9.json"
       ]
    },
    {
