@@ -1,7 +1,7 @@
 (:~ 
- : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for computing random values. All functions except for <code> <a href="https://docs.basex.org/wiki/Random_Module#random:seeded-double">random:seeded-double</a> </code> and <code> <a href="https://docs.basex.org/wiki/Random_Module#random:seeded-integer">random:seeded-integer</a> </code> are non-deterministic, i. e., they return different values for each call.
+ : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for computing random values. All functions except for <code><a href="https://docs.basex.org/wiki/Random_Module#random:seeded-double">random:seeded-double</a></code> and <code><a href="https://docs.basex.org/wiki/Random_Module#random:seeded-integer">random:seeded-integer</a></code> are non-deterministic, i. e., they return different values for each call.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Random_Module
  :)
 module namespace random = "http://basex.org/modules/random";

@@ -5,6 +5,11 @@ import { readFileSync } from "fs";
 // const __dirname = new URL('.', import.meta.url).pathname;
 
 type  NSlibrary ={[key: string]:{}};
+type Profile={
+    id:string,
+    description:string,
+    modules:[string]
+};
 
 // cache last used
 var lastName:string="";
@@ -12,11 +17,11 @@ var lastNS:NSlibrary={};
 
 function library(name:string):NSlibrary {
     if(lastName=== name) {return lastNS;}
-    const processors = loadjson("./processors.json");
+    const profile = loadjson("./profiles.json").find((e:Profile)=>e.id===name);
     const ns = {};
-    if (processors.hasOwnProperty(name)) {
+    if (profile) {
         //console.time("namespaces: "+name)
-        const mods = processors[name].modules;
+        const mods = profile.modules;
 
         mods.forEach( function (uri:string) {
             const mod = loadjson(uri);
@@ -30,9 +35,8 @@ function library(name:string):NSlibrary {
     return ns;
 };
 
-function names() :string[]{
-    const processors = loadjson("./processors.json");
-    return Object.keys(processors);
+function profiles() :[Profile]{
+    return loadjson("./profiles.json");
 };
 
 // for every namespace key in package create module entry in namespaces
@@ -50,4 +54,4 @@ function loadjson(path:string) {
     return JSON.parse(readFileSync(p, 'utf8'));
 };
 
-export { names, library };
+export { profiles, library };

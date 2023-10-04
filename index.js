@@ -1,7 +1,7 @@
 "use strict";
 // loads processor list and can build namespace object for items on list
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.library = exports.names = void 0;
+exports.library = exports.profiles = void 0;
 var fs_1 = require("fs");
 // cache last used
 var lastName = "";
@@ -10,11 +10,11 @@ function library(name) {
     if (lastName === name) {
         return lastNS;
     }
-    var processors = loadjson("./processors.json");
+    var profile = loadjson("./profiles.json").find(function (e) { return e.id === name; });
     var ns = {};
-    if (processors.hasOwnProperty(name)) {
+    if (profile) {
         //console.time("namespaces: "+name)
-        var mods = processors[name].modules;
+        var mods = profile.modules;
         mods.forEach(function (uri) {
             var mod = loadjson(uri);
             //console.log("procmod: ",uri)
@@ -29,11 +29,10 @@ function library(name) {
 }
 exports.library = library;
 ;
-function names() {
-    var processors = loadjson("./processors.json");
-    return Object.keys(processors);
+function profiles() {
+    return loadjson("./profiles.json");
 }
-exports.names = names;
+exports.profiles = profiles;
 ;
 // for every namespace key in package create module entry in namespaces
 function loadpackage(namespaces, pkg) {

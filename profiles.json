@@ -1,0 +1,25 @@
+[
+   {
+      "id": "basex-10",
+      "description": "BaseX 10.6 features",
+      "modules": [
+         "packages/basex-static-namespaces.json",
+         "packages/xpath-3.1.json",
+         "packages/basex-10.json"
+      ]
+   },
+   {
+      "id": "basex-9",
+      "description": "BaseX 9.7 features",
+      "modules": [
+         "packages/basex-static-namespaces.json",
+         "packages/xpath-3.1.json",
+         "packages/basex-9.json"
+      ]
+   },
+   {
+      "id": "none",
+      "description": "XQuery 3.1 core, no module libraries loaded",
+      "modules": []
+   }
+]

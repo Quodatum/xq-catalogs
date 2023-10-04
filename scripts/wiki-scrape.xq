@@ -15,7 +15,7 @@ declare variable $SOURCES:=map{
 };
 declare variable $KEY := "basex-10.0";
 declare variable $BASE := $SOURCES($KEY);
-declare variable $ROOT-DIR := file:base-dir() || '../specs/libs/' || $KEY || "/";
+declare variable $ROOT-DIR := file:base-dir() || '../packages.src/' || $KEY || "/";
 
 
 file:create-dir($ROOT-DIR),

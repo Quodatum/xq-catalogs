@@ -1,7 +1,7 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for manipulating arrays, which has been introduced with <a href="https://docs.basex.org/wiki/XQuery_3.1#Arrays">XQuery 3.1</a>.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Array_Module
  :)
 module namespace array = "http://www.w3.org/2005/xpath-functions/array";
@@ -9,10 +9,10 @@ module namespace array = "http://www.w3.org/2005/xpath-functions/array";
 (:~ 
  : Returns the number of members in <code>$array</code>. Note that because an array is an item, the <code>fn:count</code> function when applied to an array always returns <code>1</code>.
  :
- : @param $input value of type array(*)
+ : @param $array value of type array(*)
  : @return value of type xs:integer
  :)
-declare function array:size($input as array(*)) as xs:integer external;
+declare function array:size($array as array(*)) as xs:integer external;
 
 (:~ 
  : Returns the <code>$array</code> member at the specified <code>$position</code>.
@@ -25,7 +25,7 @@ declare function array:size($input as array(*)) as xs:integer external;
 declare function array:get($array as array(*), $position as xs:integer) as item()* external;
 
 (:~ 
- : Returns a copy of <code>$array</code> with a new <code>$member</code> attached.
+ : Returns a copy of <code>$array</code> with <code>$member</code> attached.
  :
  : @param $array value of type array(*)
  : @param $member value of type item()*
@@ -131,54 +131,54 @@ declare function array:join($arrays as array(*)*) as array(*) external;
 declare function array:flatten($items as item()*) as item()* external;
 
 (:~ 
- : Returns a new array, in which each member is computed by applying <code>$function</code> to the corresponding member of <code>$array</code>.
+ : Returns a new array, in which each member is computed by applying <code>$action</code> to the corresponding member of <code>$array</code>.
  :
  : @param $array value of type array(*)
- : @param $function value of type function(item()*
+ : @param $action value of type function(item()*)
  : @return value of type array(*)
  :)
-declare function array:for-each($array as array(*), $function as function(item()*) as item()*) as array(*) external;
+declare function array:for-each($array as array(*), $action as function(item()*) as item()*) as array(*) external;
 
 (:~ 
- : Returns a new array with those members of <code>$array</code> for which <code>$function</code> returns <code>true</code>.
+ : Returns a new array with those members of <code>$array</code> for which <code>$predicate</code> returns <code>true</code>.
  :
  : @param $array value of type array(*)
- : @param $function value of type function(item()*
+ : @param $predicate value of type function(item()*)
  : @return value of type array(*)
  :)
-declare function array:filter($array as array(*), $function as function(item()*) as xs:boolean) as array(*) external;
+declare function array:filter($array as array(*), $predicate as function(item()*) as xs:boolean) as array(*) external;
 
 (:~ 
- : Evaluates the supplied <code>$function</code> cumulatively on successive members of the supplied <code>$array</code> from left to right and using <code>$zero</code> as first argument.
+ : Evaluates the supplied <code>$action</code> cumulatively on successive members of the supplied <code>$array</code> from left to right, and uses <code>$zero</code> as first argument.
  :
  : @param $array value of type array(*)
  : @param $zero value of type item()*
- : @param $function value of type function(item()*
- : @param item()* value of type 
+ : @param $action value of type function(item()*
+ : @param item()*) value of type item()*
  : @return value of type item()*
  :)
-declare function array:fold-left($array as array(*), $zero as item()*, $function as function(item()*, item()*) as item()*) as item()* external;
+declare function array:fold-left($array as array(*), $zero as item()*, $action as function(item()*, item()*) as item()*) as item()* external;
 
 (:~ 
- : Evaluates the supplied <code>$function</code> cumulatively on successive members of the supplied <code>$array</code> from right to left and using <code>$zero</code> as first argument.
+ : Evaluates the supplied <code>$action</code> cumulatively on successive members of the supplied <code>$array</code> from right to left, and uses <code>$zero</code> as first argument.
  :
  : @param $array value of type array(*)
  : @param $zero value of type item()*
- : @param $function value of type function(item()*
- : @param item()* value of type 
+ : @param $action value of type function(item()*
+ : @param item()*) value of type item()*
  : @return value of type item()*
  :)
-declare function array:fold-right($array as array(*), $zero as item()*, $function as function(item()*, item()*) as item()*) as item()* external;
+declare function array:fold-right($array as array(*), $zero as item()*, $action as function(item()*, item()*) as item()*) as item()* external;
 
 (:~ 
- : Returns a new array obtained by evaluating the supplied <code>$function</code> for each pair of members at the same position in <code>$array1</code> and <code>$array2</code>.
+ : Returns a new array obtained by evaluating the supplied <code>$action</code> for each pair of members at the same position in <code>$array1</code> and <code>$array2</code>.
  :
  : @param $array1 value of type array(*)
  : @param $array2 value of type array(*)
- : @param $function value of type function(item()*
+ : @param $action value of type function(item()*)
  : @return value of type array(*)
  :)
-declare function array:for-each-pair($array1 as array(*), $array2 as array(*), $function as function(item()*) as item()*) as array(*) external;
+declare function array:for-each-pair($array1 as array(*), $array2 as array(*), $action as function(item()*) as item()*) as array(*) external;
 
 (:~ 
  : Returns a new array with sorted <code>$array</code> members, using an optional <code>$collation</code>. If a <code>$key</code> function is supplied, it will be applied on all array members. The items of the resulting values will be sorted using the semantics of the <code>lt</code> expression.
@@ -202,7 +202,7 @@ declare function array:sort($array as array(*), $collation as xs:string?) as arr
  :
  : @param $array value of type array(*)
  : @param $collation value of type xs:string?
- : @param $key value of type function(item()*
+ : @param $key value of type function(item()*)
  : @return value of type array(*)
  :)
 declare function array:sort($array as array(*), $collation as xs:string?, $key as function(item()*) as xs:anyAtomicType*) as array(*) external;

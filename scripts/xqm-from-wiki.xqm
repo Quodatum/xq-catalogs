@@ -45,7 +45,7 @@ declare function xqgen:header(
     $xml//div[@id = 'mw-content-text']/div/p[1]/node(), $url,$base
   ) ||string:nl() ||
   ' :' ||string:nl() ||
-  ' : @author quodatum/xqlint ' || current-dateTime() ||string:nl() ||
+  ' : @author BaseX team (wiki scrape by quodatum/xq-catalogs) '  ||string:nl() ||
   ' : @see ' || $url ||string:nl() ||
   ' :)'
 };
@@ -81,15 +81,18 @@ declare function xqgen:functions(
 ) as xs:string* {
   for $table in $xml//table[preceding::h2][tbody/tr/td[1]/b='Signature']
   let $summary := $table/tbody/tr[td[1]/b = 'Summary']/td[2]/node()
+  let $parse:= xqgen:parse-signature($table/tbody/tr/td[preceding-sibling::td[1]/b =  'Signature'])  
+  for $arity in $parse?arities
+  let $args:=subsequence($parse?args,1,$arity )!normalize-space(substring-before(. ||":=",":="))
+  let $signature:= ``[`{ $parse?name}`(`{ string-join($args,', ') }`) as `{ $parse?type }`]``
   (: xquery 4 style :)
-  for $signature in xqgen:signatures($table)
+  
   let $anns := (
-    for $param in tokenize(replace($signature, '^\(|\) .*', ''), ', ')
+    for $param in $args
     let $tokens := tokenize($param, ' as ', 'q')
     return ' : @param ' || $tokens[1] || ' value of type ' || $tokens[2],
 
-    for $return in replace($signature, '^.* as ', '')[. != 'empty-sequence()']
-    return ' : @return value of type ' || $return,
+     ' : @return value of type ' || $parse?type,
 
     for $error in $table/tbody/tr[td[1]/b = 'Errors']/td[2]/code
       [not(preceding-sibling::node()[1] instance of text())]
@@ -158,19 +161,32 @@ as xs:string{
 };
 
 (:~  function signatures :)
-declare function xqgen:signatures($table as element(table))
+declare function xqgen:signatures($sig as map(*))
 as xs:string+{
-  let $sigs:=$table/tbody/tr[td[1]/b = 'Signatures']/td[2]/code
-  return if($sigs)
-         then $sigs (: pre basex10 :)
-         else let $sig:=$table/tbody/tr/td[preceding-sibling::td[1]/b =  'Signature']/string()
-              let $sig:=replace($sig,"&#xA;"," ")
-              let $type:= replace($sig,"(.* as )(.*)","$2")
-              let $name:= substring-before($sig,"(")
-              let $args:=substring($sig,2+string-length($name),string-length($sig)-string-length($type)-string-length($name)-6)
-              let $args:=tokenize($args,",")
-              let $req:=$args!util:if(contains(.,":="),0,1)=>sum()
-              for $i in 0 to count($args)-$req
-              let $a:=subsequence($args,1,$i+$req)!normalize-space(substring-before(. ||":=",":="))
-              return ``[ `{ $name}`(`{ string-join($a,', ') }`) as `{ $type }`]``
+   for $i in 0 to count($sig?args)-$sig?req
+  let $a:=subsequence($sig?args,1,$i+$sig?req)!normalize-space(substring-before(. ||":=",":="))
+  return ``[`{ $sig?name}`(`{ string-join($a,', ') }`) as `{ $sig?type }`]``
+};
+
+declare function xqgen:trim( $arg as xs:string? )  as xs:string {
+   replace(replace($arg,'\s+$',''),'^\s+','')
+} ;
+
+(:~ extract info from signature :)
+declare function xqgen:parse-signature($sig as xs:string)
+as map(*){
+ let $sig:=xqgen:trim($sig)
+ let $sig:=normalize-space(replace($sig,"&#xA;"," "))
+  let $type:= replace($sig,"(.* as )(.*)","$2")
+  let $name:= substring-before($sig,"(")
+  let $args:=substring($sig,2+string-length($name),string-length($sig)-string-length($type)-string-length($name)-6)
+  let $args:=tokenize($args,"\s*,\s*") 
+
+  let $required:=$args!util:if(contains(.,":="),0,1)=>sum() (: required args :)
+  return map{"name":$name,
+             "type": $type,
+             "args":$args,
+             "req": $required,
+             "arities": $required to count($args)
+  }
 };

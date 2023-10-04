@@ -1,27 +1,27 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for handling <i>lazy</i> items.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Lazy_Module
  :)
 module namespace lazy = "http://basex.org/modules/lazy";
 
 (:~ 
- : Caches the data of lazy <code>$items</code> in a sequence:<br/> <ul> <li>data of lazy items will be retrieved and cached inside the item.</li> <li>non-lazy items, or lazy items with cached data, will simply be passed through.</li> <li>If <code>$lazy</code> is set to <code>true()</code>, caching will be deferred until the data is eventually requested. Streaming will be disabled: Data will always be cached before a stream is returned.</li> </ul> <p>Caching is advisable if an item will be processed more than once, or if the data may not be available anymore at a later stage. </p>
+ : Caches the data of lazy <code>$input</code> items:<br/> <ul><li>data of lazy items are retrieved and cached inside the item.</li><li>non-lazy items, or lazy items with cached data, are simply passed through.</li><li>If <code>$lazy</code> is set to <code>true()</code>, caching is deferred until the data is eventually requested. Streaming will be disabled: Data will be cached before a stream is returned.</li></ul> <p>Caching is advisable if an item is processed more than once, or if the data may not be available anymore at a later stage. </p>
  :
- : @param $items value of type item()*
+ : @param $input value of type item()*
  : @return value of type item()*
  :)
-declare function lazy:cache($items as item()*) as item()* external;
+declare function lazy:cache($input as item()*) as item()* external;
 
 (:~ 
- : Caches the data of lazy <code>$items</code> in a sequence:<br/> <ul> <li>data of lazy items will be retrieved and cached inside the item.</li> <li>non-lazy items, or lazy items with cached data, will simply be passed through.</li> <li>If <code>$lazy</code> is set to <code>true()</code>, caching will be deferred until the data is eventually requested. Streaming will be disabled: Data will always be cached before a stream is returned.</li> </ul> <p>Caching is advisable if an item will be processed more than once, or if the data may not be available anymore at a later stage. </p>
+ : Caches the data of lazy <code>$input</code> items:<br/> <ul><li>data of lazy items are retrieved and cached inside the item.</li><li>non-lazy items, or lazy items with cached data, are simply passed through.</li><li>If <code>$lazy</code> is set to <code>true()</code>, caching is deferred until the data is eventually requested. Streaming will be disabled: Data will be cached before a stream is returned.</li></ul> <p>Caching is advisable if an item is processed more than once, or if the data may not be available anymore at a later stage. </p>
  :
- : @param $items value of type item()*
- : @param $lazy value of type xs:boolean
+ : @param $input value of type item()*
+ : @param $lazy value of type xs:boolean?
  : @return value of type item()*
  :)
-declare function lazy:cache($items as item()*, $lazy as xs:boolean) as item()* external;
+declare function lazy:cache($input as item()*, $lazy as xs:boolean?) as item()* external;
 
 (:~ 
  : Checks whether the specified <code>$item</code> is lazy.

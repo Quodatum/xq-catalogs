@@ -1,7 +1,7 @@
 (:~ 
  : This <a href="https://docs.basex.org/wiki/Module_Library">XQuery Module</a> contains functions for accessing and modifying server-side session information. This module is mainly useful in the context of <a href="https://docs.basex.org/wiki/Web_Application">Web Applications</a>.
  :
- : @author BaseX Team
+ : @author BaseX team (wiki scrape by quodatum/xq-catalogs) 
  : @see https://docs.basex.org/wiki/Session_Module
  :)
 module namespace session = "http://basex.org/modules/session";
@@ -59,6 +59,7 @@ declare function session:get($name as xs:string, $default as item()*) as item()*
  :
  : @param $name value of type xs:string
  : @param $value value of type item()*
+ : @return value of type empty-sequence()
  : @error session:not-found No session is available for the current client.
  :)
 declare function session:set($name as xs:string, $value as item()*) as empty-sequence() external;
@@ -67,10 +68,13 @@ declare function session:set($name as xs:string, $value as item()*) as empty-seq
  : Deletes a session attribute with the specified <code>$name</code>.
  :
  : @param $name value of type xs:string
+ : @return value of type empty-sequence()
  :)
 declare function session:delete($name as xs:string) as empty-sequence() external;
 
 (:~ 
  : Unregisters a session and all data associated with it.
+ :
+ : @return value of type empty-sequence()
  :)
 declare function session:close() as empty-sequence() external;
