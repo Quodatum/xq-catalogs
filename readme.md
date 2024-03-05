@@ -1,4 +1,5 @@
 # @quodatum/xq-catalogs
+[github](https://github.com/Quodatum/xq-catalogs)
 
 XQuery namespace and module library definitions as JSON. 
 
