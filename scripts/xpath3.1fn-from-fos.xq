@@ -4,10 +4,12 @@
 declare namespace fos="http://www.w3.org/xpath-functions/spec/namespace";
 
 declare variable $uri:="https://raw.githubusercontent.com/w3c/qtspecs/master/specifications/xpath-functions-31/src/function-catalog.xml";
-declare variable $catalog:=fetch:xml($uri);
-declare variable $dest:="../packages.src/xpath-3.1/xpath3.1-fn.xqm"=>file:resolve-path(file:base-dir());
+declare variable $catalog:=fetch:doc($uri);
+declare variable $dest:="../packages.src/xpath-3.1/xpath3.1-fn.xqm"
+                        =>file:resolve-path(file:base-dir());
 
-declare function local:xqm($catalog) as xs:string
+(:~ extract function defs from fos :)
+declare function local:generate-xqm($catalog as document-node()) as xs:string
 {
 let $x:=
         for $f in $catalog//fos:function[@prefix="fn"]
@@ -36,4 +38,9 @@ declare function fn:`{ $proto/@name }`(`{ $args }`) as `{ $proto/@return-type }`
 ]``
 };
 
-$dest=>file:write-text(local:xqm($catalog))
+declare %updating function local:save($data, $dest as xs:string)
+{
+file:write-text($dest,$data)
+};
+
+local:generate-xqm($catalog)=>local:save($dest)

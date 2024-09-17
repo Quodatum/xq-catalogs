@@ -1,5 +1,5 @@
 
-(: generated from xpath-3.1\function-catalog.xml  2023-08-16T10:33:53.053+01:00 :)
+(: generated from xpath-3.1\function-catalog.xml  2024-09-14T22:49:30.912+01:00 :)
 
 module namespace fn = 'http://www.w3.org/2005/xpath-functions';
 

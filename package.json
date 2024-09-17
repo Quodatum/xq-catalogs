@@ -1,6 +1,6 @@
 {
   "name": "@quodatum/xq-catalogs",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "XQuery namespace and module library definitions as JSON",
   "main": "index.js",
   "files": ["profiles.json","packages"],
@@ -16,7 +16,9 @@
   "scripts": {
     "lint": "eslint . --fix",
     "test": "node tests/basic-test.mjs ",
-    "wiki-scrape": "%BASEX-10% scripts/wiki-scrape.xq",
+    "xpath3.1-fos": "%BASEX10%/bin/basex scripts/xpath3.1fn-from-fos.xq",
+    "xpath4.0-fos": "%BASEX10%/bin/basex scripts/xpath4.0fn-from-fos.xq",
+    "wiki-scrape": "%BASEX10% scripts/wiki-scrape.xq",
     "build-packages": "node scripts/build-packages.js",
     "test-compile": "tsc -p ./",
     "compile": "tsc -p ./"

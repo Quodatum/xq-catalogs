@@ -1,9 +1,12 @@
 # @quodatum/xq-catalogs
 [github](https://github.com/Quodatum/xq-catalogs)
-
-XQuery namespace and module library definitions as JSON. 
-
 [npm](https://www.npmjs.com/package/@quodatum/xq-catalogs)
+
+Provides XQuery namespace and module library definitions via JSON format files.
+The standard XPath functions are included, additionally BaseX modules for versions 9 and 10 are provided.
+
+
+* [api](https://www)
 ## API
 ### profiles()
 returns array of Profiles defined in profiles.json.
@@ -36,6 +39,7 @@ returns object describing namespaces and modules available for processor
 
 This is the xqdoc like format where var/fns are objects. Format subject to change, something like..
 ```json
+{
 "http://basex.org": {
         "description": "BaseX Annotations, Pragmas, …",
         "prefixes": [
@@ -59,11 +63,23 @@ This is the xqdoc like format where var/fns are objects. Format subject to chang
     "params": [],
     "type": "element(file)*",
     "description": " Returns <a href=\"https://web.archive.org/web/20220623230943/https://docs.basex.org/web/20220623231027/https://docs.basex.org/wiki/Logging\">Logging</a> data compiled by the database or HTTP server: <ul> <li>If no argument is specified, a list of all log files will be returned, including the file size and date.</li> <li>If a <code>$date</code> is specified, the contents of a single log file will be returned.</li> <li>If <code>$merge</code> is set to true, related log entries will be merged. Please note that the merge might not be 100% successful, as log entries may be ambiguous.</li> </ul>"
-   },
+   }}
+}
 ```
-## Dev notes
-`index.ts` is source. `tsc` is used to compile to into a "commonjs" module for now.
 
-### sources files
+
+## Sources 
+### XPath functions 
+XPath functions are derived from the spec function catalog. 
+* XPath 3.1 https://github.com/w3c/qtspecs/blob/master/specifications/xpath-functions-31/src/function-catalog.xml
+* XPath 4.0 draft https://raw.githubusercontent.com/qt4cg/qtspecs/master/specifications/xpath-functions-40/src/function-catalog.xml
+
+### BaseX libraries
+ BaseX libraries are scraped from the BaseX wiki or wayback machine snapshots for older versions
+* Version 9.7 https://web.archive.org/web/20220623230943/https://docs.basex.org/wiki/Main_Page 
+
+
 The npm script `wiki-scrape` creates stub xqm files below `packages.src` from the BaseX wiki.
 
+## Dev notes
+The typescript file `index.ts`  is the source. `tsc` is used to compile to into a "commonjs" module. This is currently required by `xqlint`
