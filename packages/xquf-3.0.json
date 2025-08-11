@@ -1,0 +1,36 @@
+{
+ "http://www.w3.org/2005/xpath-functions": {
+  "ns": "http://www.w3.org/2005/xpath-functions",
+  "prefixes": [
+   "fn"
+  ],
+  "namespaces": [],
+  "variables": {},
+  "functions": {
+   "http://www.w3.org/2005/xpath-functions#put#2": {
+    "name": "put",
+    "uri": "http://www.w3.org/2005/xpath-functions",
+    "key": "http://www.w3.org/2005/xpath-functions#put#2",
+    "params": [
+     "$node as node()",
+     "$uri as xs:string"
+    ],
+    "type": "empty-sequence()",
+    "description": " The fn:put function stores a document or element to the location specified by $uri. This function is normally invoked to create a resource on an external storage system such as a file system or a database."
+   },
+   "http://www.w3.org/2005/xpath-functions#put#3": {
+    "name": "put",
+    "uri": "http://www.w3.org/2005/xpath-functions",
+    "key": "http://www.w3.org/2005/xpath-functions#put#3",
+    "params": [
+     "$node as node()",
+     "$uri as xs:string",
+     "$params as element(output:serialization-parameters)?"
+    ],
+    "type": "empty-sequence()"
+   }
+  },
+  "type": "module",
+  "override": true
+ }
+}

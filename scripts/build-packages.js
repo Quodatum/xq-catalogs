@@ -1,9 +1,10 @@
 'use strict';
-// generate  package  json file for each processor from xqm files in dir
+// generate  package  json file for each processor from xqm files in src dir
 var processors = {
     'basex-9': { 'src': 'packages.src/basex-9.7' },
     'basex-10': { 'src': 'packages.src/basex-10.0' },
-    'xpath-3.1': { 'src': 'packages.src/xpath-3.1' }
+    'xpath-3.1': { 'src': 'packages.src/xpath-3.1' },
+    'xquf-3.0': { 'src': 'packages.src/xquf-3.0' }
 };
 
 var out = 'packages/';
@@ -45,7 +46,7 @@ function importMods(files) {
             xqdoc.functions=keyed(xqdoc.functions);
             xqdoc.variables=keyed(xqdoc.variables);;
             const extras={"type":"module","override": true};
-            result[xqdoc.ns] ={...xqdoc,...extras};
+            result[xqdoc.ns] ={...result[xqdoc.ns],...xqdoc,...extras};
             console.log(xqdoc.ns);
            // console.log(xqdoc);
         }
