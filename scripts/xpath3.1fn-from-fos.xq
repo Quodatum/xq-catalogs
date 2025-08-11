@@ -24,7 +24,7 @@ module namespace fn = 'http://www.w3.org/2005/xpath-functions';
 ]``
 };
 
-
+(:~ generate XQuery declaration from proto :)
 declare function local:declare($proto as element(fos:proto))
 as xs:string
 { 

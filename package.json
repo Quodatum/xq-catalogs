@@ -1,9 +1,12 @@
 {
   "name": "@quodatum/xq-catalogs",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "XQuery namespace and module library definitions as JSON",
   "main": "index.js",
-  "files": ["profiles.json","packages"],
+  "files": [
+    "profiles.json",
+    "packages"
+  ],
   "keywords": [
     "xquery"
   ],
@@ -29,7 +32,8 @@
   "devDependencies": {
     "@quodatum/xqlint": "^0.2.5",
     "@types/node": "^20.4.5",
-    "eslint": "^8.10.0",
+    "eslint": "^9",
+    "globals": "^16.3.0",
     "typescript": "^5.1.6"
   }
 }

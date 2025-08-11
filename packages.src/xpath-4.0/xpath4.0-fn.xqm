@@ -1,7 +1,7 @@
 
 (: 
 generated from https://raw.githubusercontent.com/qt4cg/qtspecs/master/specifications/xpath-functions-40/src/function-catalog.xml 
-on 2024-09-16T11:57:24.356+01:00 
+on 2025-08-11T17:52:44.895+01:00 
 :)
 
 module namespace fn = 'http://www.w3.org/2005/xpath-functions';
@@ -62,6 +62,12 @@ declare function fn:apply($function as function(*), $arguments as array(*)) as i
 declare function fn:atomic-equal($value1 as xs:anyAtomicType, $value2 as xs:anyAtomicType) as xs:boolean external;
 
 (:~ 
+  Returns a record containing information about the type annotation of an atomic value.
+  '{}
+:)
+declare function fn:atomic-type-annotation($value as xs:anyAtomicType) as map(*) external;
+
+(:~ 
   Returns a list of environment variable names that are suitable for passing to fn:environment-variable, as a (possibly empty) sequence of strings.
   '{}
 :)
@@ -98,12 +104,6 @@ declare function fn:build-uri($parts as map(*), $options as map(*)?) as xs:strin
 declare function fn:ceiling($value as xs:numeric?) as xs:numeric? external;
 
 (:~ 
-  Applies a sequence of functions starting with an initial input.
-  '{}
-:)
-declare function fn:chain($input as item()*, $functions as function(*)*) as item()* external;
-
-(:~ 
   Returns a string containing a particular character or glyph.
   '{}
 :)
@@ -114,6 +114,12 @@ declare function fn:char($value as xs:string) as xs:string external;
   '{}
 :)
 declare function fn:characters($value as xs:string?) as xs:string* external;
+
+(:~ 
+  Returns the timezone offset from UTC that is in conventional use at a given place and time.
+  '{}
+:)
+declare function fn:civil-timezone($value as xs:dateTime, $place as xs:string) as xs:dayTimeDuration external;
 
 (:~ 
   Returns true if two strings are equal, considered codepoint-by-codepoint.
@@ -134,7 +140,7 @@ declare function fn:codepoints-to-string($values as xs:integer*) as xs:string ex
 declare function fn:collation($options as map(*)) as xs:string external;
 
 (:~ 
-  Asks whether a collation URI is recognized by the implementation.
+  Asks whether a collation URI is recognized by the implementation, and whether it has required properties.
   '{}
 :)
 declare function fn:collation-available($collation as xs:string, $usage as xs:string) as xs:boolean external;
@@ -149,7 +155,7 @@ declare function fn:collation-key($value as xs:string, $collation as xs:string?)
   Returns a sequence of items identified by a collection URI; or a default collection if no URI is supplied.
   '{}
 :)
-declare function fn:collection($uri as xs:string?) as item()* external;
+declare function fn:collection($source as xs:string?) as item()* external;
 
 (:~ 
   Returns -1, 0, or 1, depending on whether the first value is less than, equal to, or greater than the second value.
@@ -188,6 +194,12 @@ declare function fn:contains-token($value as xs:string*, $token as xs:string, $c
 declare function fn:count($input as item()*) as xs:integer external;
 
 (:~ 
+  Reads an external resource containing CSV, and returns the results as a record containing information about the names in the header, as well as the data itself.
+  '{}
+:)
+declare function fn:csv-doc($source as xs:string?, $options as map(*)?) as parsed-csv-structure-record external;
+
+(:~ 
   Parses CSV data supplied as a string, returning the results in the form of a sequence of arrays of strings.
   '{}
 :)
@@ -197,7 +209,7 @@ declare function fn:csv-to-arrays($value as xs:string?, $options as map(*)?) as 
   Parses CSV data supplied as a string, returning the results as an XML document, as described by .
   '{}
 :)
-declare function fn:csv-to-xml($value as xs:string?, $options as map(*)?) as element(fn:csv)? external;
+declare function fn:csv-to-xml($value as xs:string?, $options as map(*)?) as document-node(fn:csv)? external;
 
 (:~ 
   Returns the current date.
@@ -236,10 +248,10 @@ declare function fn:dateTime($date as xs:date?, $time as xs:time?) as xs:dateTim
 declare function fn:day-from-date($value as xs:date?) as xs:integer? external;
 
 (:~ 
-  Returns the day component of an xs:dateTime.
+  Returns the day component of a value.
   '{}
 :)
-declare function fn:day-from-dateTime($value as xs:dateTime?) as xs:integer? external;
+declare function fn:day-from-dateTime($value as xs:string) as xs:integer? external;
 
 (:~ 
   Returns the number of days in a duration.
@@ -272,16 +284,22 @@ declare function fn:default-collation() as xs:string external;
 declare function fn:default-language() as xs:language external;
 
 (:~ 
-  Removes duplicate nodes and sorts the input into document order.
+  Removes duplicate GNodes and sorts the input into document order.
   '{}
 :)
-declare function fn:distinct-ordered-nodes($nodes as node()*) as node()* external;
+declare function fn:distinct-ordered-nodes($nodes as gnode()*) as gnode()* external;
 
 (:~ 
   Returns the values that appear in a sequence, with duplicates eliminated.
   '{}
 :)
 declare function fn:distinct-values($values as xs:anyAtomicType*, $collation as xs:string?) as xs:anyAtomicType* external;
+
+(:~ 
+  Divides one xs:decimal by another to a defined precision, returning both the quotient and the remainder.
+  '{}
+:)
+declare function fn:divide-decimals($value as xs:decimal, $divisor as xs:decimal, $precision as xs:integer?) as map(*) external;
 
 (:~ 
   Processes a supplied value repeatedly, continuing when some condition is false, and returning the value that satisfies the condition.
@@ -293,13 +311,13 @@ declare function fn:do-until($input as item()*, $action as function(item()*, xs:
   Retrieves a document using a URI supplied as an xs:string, and returns the corresponding document node.
   '{}
 :)
-declare function fn:doc($href as xs:string?) as document-node()? external;
+declare function fn:doc($source as xs:string?, $options as map(*)?) as document-node()? external;
 
 (:~ 
-  The function returns true if and only if the function call fn:doc($href) would return a document node.
+  The function returns true if and only if the function call fn:doc($source, $options) would return a document node.
   '{}
 :)
-declare function fn:doc-available($href as xs:string?) as xs:boolean external;
+declare function fn:doc-available($source as xs:string?, $options as map(*)?) as xs:boolean external;
 
 (:~ 
   Returns the URI of a resource where a document can be found, if available.
@@ -312,6 +330,18 @@ declare function fn:document-uri($node as node()?) as xs:anyURI? external;
   '{}
 :)
 declare function fn:duplicate-values($values as xs:anyAtomicType*, $collation as xs:string?) as xs:anyAtomicType* external;
+
+(:~ 
+  Converts an element node into a map that is suitable for JSON serialization.
+  '{}
+:)
+declare function fn:element-to-map($element as element()?, $options as map(*)?) as map(xs:string, item()?)? external;
+
+(:~ 
+  Analyzes sample data to generate a conversion plan suitable for use by the element-to-map function.
+  '{}
+:)
+declare function fn:element-to-map-plan($input as xs:string) as map(xs:string, record(*)) external;
 
 (:~ 
   Returns the sequence of element nodes that have an ID value matching the value of one or more of the IDREF values supplied in $values.
@@ -353,7 +383,7 @@ declare function fn:environment-variable($name as xs:string) as xs:string? exter
   Calling the fn:error function raises an application-defined error.
   '{}
 :)
-declare function fn:error($code as xs:QName?, $description as xs:string?, $value as item()*) as none external;
+declare function fn:error($code as xs:QName?, $description as xs:string?, $value as item()*) as item()* external;
 
 (:~ 
   Escapes a URI in the same way that HTML user agents handle attribute values expected to contain URIs.
@@ -407,13 +437,13 @@ declare function fn:floor($value as xs:numeric?) as xs:numeric? external;
   Processes the supplied sequence from left to right, applying the supplied function repeatedly to each item in turn, together with an accumulated result value.
   '{}
 :)
-declare function fn:fold-left($input as item()*, $zero as item()*, $action as function(item()*, item(), xs:integer) as item()*) as item()* external;
+declare function fn:fold-left($input as item()*, $init as item()*, $action as function(item()*, item()) as item()*) as item()* external;
 
 (:~ 
   Processes the supplied sequence from right to left, applying the supplied function repeatedly to each item in turn, together with an accumulated result value.
   '{}
 :)
-declare function fn:fold-right($input as item()*, $zero as item()*, $action as function(item(), item()*, xs:integer) as item()*) as item()* external;
+declare function fn:fold-right($input as item()*, $init as item()*, $action as function(item(), item()*) as item()*) as item()* external;
 
 (:~ 
   Returns the last item in a sequence.
@@ -467,13 +497,19 @@ declare function fn:format-time($value as xs:time?, $picture as xs:string, $lang
   Returns the annotations of the function item.
   '{}
 :)
-declare function fn:function-annotations($function as function(*)) as map(*) external;
+declare function fn:function-annotations($function as function(*)) as map(xs:QName, xs:anyAtomicType*)* external;
 
 (:~ 
   Returns the arity of the function identified by a function item.
   '{}
 :)
 declare function fn:function-arity($function as function(*)) as xs:integer external;
+
+(:~ 
+  Returns a string representing the identity of a function item.
+  '{}
+:)
+declare function fn:function-identity($function as function(*)) as xs:string external;
 
 (:~ 
   Returns a function item having a given name and arity, if there is one.
@@ -488,10 +524,10 @@ declare function fn:function-lookup($name as xs:QName, $arity as xs:integer) as 
 declare function fn:function-name($function as function(*)) as xs:QName? external;
 
 (:~ 
-  This function returns a string that uniquely identifies a given node.
+  This function returns a string that uniquely identifies a given GNode.
   '{}
 :)
-declare function fn:generate-id($node as node()?) as xs:string external;
+declare function fn:generate-id($node as gnode()?) as xs:string external;
 
 (:~ 
   Splits the supplied string into a sequence of single-grapheme strings.
@@ -509,7 +545,7 @@ declare function fn:has-children($node as node()?) as xs:boolean external;
   Returns the results of a specified hash, checksum, or cyclic redundancy check function applied to the input.
   '{}
 :)
-declare function fn:hash($value as xs:string, $options as map(*)?) as xs:hexBinary? external;
+declare function fn:hash($value as xs:string, $algorithm as xs:string?, $options as map(*)?) as xs:hexBinary? external;
 
 (:~ 
   Returns the first item in a sequence.
@@ -521,13 +557,13 @@ declare function fn:head($input as item()*) as item()? external;
   Returns those items from a supplied sequence that have the highest value of a sort key, where the sort key can be computed using a caller-supplied function.
   '{}
 :)
-declare function fn:highest($input as item()*, $collation as xs:string?, $key as function(item()) as xs:anyAtomicType*) as item()* external;
+declare function fn:highest($input as item()*, $collation as xs:string?, $key as (function(item()) as xs:anyAtomicType*)?) as item()* external;
 
 (:~ 
-  Returns the hours component of an xs:dateTime.
+  Returns the hours component of a value.
   '{}
 :)
-declare function fn:hours-from-dateTime($value as xs:dateTime?) as xs:integer? external;
+declare function fn:hours-from-dateTime($value as xs:string) as xs:integer? external;
 
 (:~ 
   Returns the number of hours in a duration.
@@ -540,6 +576,12 @@ declare function fn:hours-from-duration($value as xs:duration?) as xs:integer? e
   '{}
 :)
 declare function fn:hours-from-time($value as xs:time?) as xs:integer? external;
+
+(:~ 
+  Reads an external resource containing HTML, and returns the result of parsing the resource as HTML.
+  '{}
+:)
+declare function fn:html-doc($source as xs:string?, $options as map(*)?) as document-node(*:html)? external;
 
 (:~ 
   Returns the sequence of element nodes that have an ID value matching the value of one or more of the IDREF values supplied in $values.
@@ -602,16 +644,10 @@ declare function fn:innermost($nodes as node()*) as node()* external;
 declare function fn:insert-before($input as item()*, $position as xs:integer, $insert as item()*) as item()* external;
 
 (:~ 
-  Inserts a separator between adjacent items in a sequence.
-  '{}
-:)
-declare function fn:intersperse($input as item()*, $separator as item()*) as item()* external;
-
-(:~ 
   Creates an Invisible XML parser for a grammar.
   '{}
 :)
-declare function fn:invisible-xml($grammar as xs:string, $options as map(*)?) as function(xs:string) as document-node() external;
+declare function fn:invisible-xml($grammar as xs:string, $options as map(*)?) as function(xs:string) as item() external;
 
 (:~ 
   Converts a string containing an IRI into a URI according to the rules of .
@@ -632,22 +668,40 @@ declare function fn:is-NaN($value as xs:anyAtomicType) as xs:boolean external;
 declare function fn:items-at($input as item()*, $at as xs:integer*) as item()* external;
 
 (:~ 
+  Returns the ·content· property of a JNode.
+  '{}
+:)
+declare function fn:jnode-content($input as jnode()?) as item()* external;
+
+(:~ 
+  Returns the ·position· property of a JNode.
+  '{}
+:)
+declare function fn:jnode-position($input as jnode()?) as xs:anyAtomicType? external;
+
+(:~ 
+  Returns the ·selector· property of a JNode.
+  '{}
+:)
+declare function fn:jnode-selector($input as jnode()?) as xs:anyAtomicType? external;
+
+(:~ 
   Reads an external resource containing JSON, and returns the result of parsing the resource as JSON.
   '{}
 :)
-declare function fn:json-doc($href as xs:string?, $options as map(*)?) as item()? external;
+declare function fn:json-doc($source as xs:string?, $options as map(*)?) as item()? external;
 
 (:~ 
   Parses a string supplied in the form of a JSON text, returning the results in the form of an XML document node.
   '{}
 :)
-declare function fn:json-to-xml($value as xs:string?, $options as map(*)?) as document-node()? external;
+declare function fn:json-to-xml($value as xs:string?, $options as map(*)?) as document-node(fn:*)? external;
 
 (:~ 
-  Returns the label associated with a labeled item, as a map.
+  Delivers a root wrapping a map or array, enabling the use of lookup expression to navigate a rooted at that map or array.
   '{}
 :)
-declare function fn:label($input as item()?) as map(xs:string, item()*)? external;
+declare function fn:jtree($input as xs:string) as xs:string external;
 
 (:~ 
   This function tests whether the language of $node, or the context value if the second argument is omitted, as specified by xml:lang attributes is the same as, or is a sublanguage of, the language specified by $language.
@@ -689,7 +743,7 @@ declare function fn:lower-case($value as xs:string?) as xs:string external;
   Returns those items from a supplied sequence that have the lowest value of a sort key, where the sort key can be computed using a caller-supplied function.
   '{}
 :)
-declare function fn:lowest($input as item()*, $collation as xs:string?, $key as function(item()) as xs:anyAtomicType*) as item()* external;
+declare function fn:lowest($input as item()*, $collation as xs:string?, $key as (function(item()) as xs:anyAtomicType*)?) as item()* external;
 
 (:~ 
   Returns true if the supplied string matches a given regular expression.
@@ -716,10 +770,10 @@ declare function fn:message($input as item()*, $label as xs:string?) as empty-se
 declare function fn:min($values as xs:anyAtomicType*, $collation as xs:string?) as xs:anyAtomicType? external;
 
 (:~ 
-  Returns the minute component of an xs:dateTime.
+  Returns the minute component of a value.
   '{}
 :)
-declare function fn:minutes-from-dateTime($value as xs:dateTime?) as xs:integer? external;
+declare function fn:minutes-from-dateTime($value as xs:string) as xs:integer? external;
 
 (:~ 
   Returns the number of minutes in a duration.
@@ -740,10 +794,10 @@ declare function fn:minutes-from-time($value as xs:time?) as xs:integer? externa
 declare function fn:month-from-date($value as xs:date?) as xs:integer? external;
 
 (:~ 
-  Returns the month component of an xs:dateTime.
+  Returns the month component of a value.
   '{}
 :)
-declare function fn:month-from-dateTime($value as xs:dateTime?) as xs:integer? external;
+declare function fn:month-from-dateTime($value as xs:string) as xs:integer? external;
 
 (:~ 
   Returns the number of months in a duration.
@@ -788,6 +842,12 @@ declare function fn:nilled($node as node()?) as xs:boolean? external;
 declare function fn:node-name($node as node()?) as xs:QName? external;
 
 (:~ 
+  Returns a record containing information about the type annotation of an element or attribute node.
+  '{}
+:)
+declare function fn:node-type-annotation($node as xs:string) as map(*) external;
+
+(:~ 
   Returns $value with leading and trailing whitespace removed, and sequences of internal whitespace reduced to a single space character.
   '{}
 :)
@@ -830,16 +890,16 @@ declare function fn:op($operator as xs:string) as function(item()*, item()*) as 
 declare function fn:outermost($nodes as node()*) as node()* external;
 
 (:~ 
-  Parses CSV data supplied as a string, returning the results in the form of a record containing information about the names in the header, as well as the data itself.
+  Parses CSV data, returning the results in the form of a record containing information about the names in the header, as well as the data itself.
   '{}
 :)
-declare function fn:parse-csv($value as xs:string?, $options as map(*)?) as map(*) external;
+declare function fn:parse-csv($value as xs:string, $options as map(*)?) as map(*) external;
 
 (:~ 
-  This function takes as input an HTML document represented as a string, and returns the document node at the root of an XDM tree representing the parsed document.
+  This function takes as input an HTML document, and returns the document node at the root of an XDM tree representing the parsed document.
   '{}
 :)
-declare function fn:parse-html($html as xs:string, $options as map(*)) as document-node(element(*))? external;
+declare function fn:parse-html($value as xs:string, $options as map(*)?) as document-node(*:html)? external;
 
 (:~ 
   Parses a string containing the date and time in IETF format, returning the corresponding xs:dateTime value.
@@ -854,10 +914,10 @@ declare function fn:parse-ietf-date($value as xs:string?) as xs:dateTime? extern
 declare function fn:parse-integer($value as xs:string?, $radix as xs:integer?) as xs:integer? external;
 
 (:~ 
-  Parses a string supplied in the form of a JSON text, returning the results typically in the form of a map or array.
+  Parses input supplied in the form of a JSON text, returning the results typically in the form of a map or array.
   '{}
 :)
-declare function fn:parse-json($value as xs:string?, $options as map(*)?) as item()? external;
+declare function fn:parse-json($value as xs:string, $options as map(*)?) as item()? external;
 
 (:~ 
   Returns an xs:QName value formed by parsing an EQName.
@@ -872,34 +932,34 @@ declare function fn:parse-QName($value as xs:string?) as xs:QName? external;
 declare function fn:parse-uri($value as xs:string?, $options as map(*)?) as map(*) external;
 
 (:~ 
-  This function takes as input an XML document represented as a string, and returns the document node at the root of an XDM tree representing the parsed document.
+  This function takes as input an XML document, and returns the document node at the root of an XDM tree representing the parsed document.
   '{}
 :)
-declare function fn:parse-xml($value as xs:string?, $options as map(*)?) as document-node(element(*))? external;
+declare function fn:parse-xml($value as xs:string, $options as map(*)?) as document-node(*)? external;
 
 (:~ 
   This function takes as input an XML external entity represented as a string, and returns the document node at the root of an XDM tree representing the parsed document fragment.
   '{}
 :)
-declare function fn:parse-xml-fragment($value as xs:string?, $options as map(*)?) as document-node()? external;
+declare function fn:parse-xml-fragment($value as xs:string, $options as map(*)?) as document-node()? external;
+
+(:~ 
+  Performs partial application of a function item by binding values to selected arguments.
+  '{}
+:)
+declare function fn:partial-apply($function as function(*), $arguments as map(xs:positiveInteger, item()*)) as function(*) external;
 
 (:~ 
   Partitions a sequence of items into a sequence of non-empty arrays containing the same items, starting a new partition when a supplied condition is true.
   '{}
 :)
-declare function fn:partition($input as item()*, $split-when as function(item()*, item(), xs:integer) as xs:boolean?) as array(item())* external;
+declare function fn:partition($input as item()*, $split-when as function(item()*, item(), xs:integer) as xs:boolean?) as array(item()*)* external;
 
 (:~ 
   Returns a path expression that can be used to select the supplied node relative to the root of its containing document.
   '{}
 :)
-declare function fn:path($node as node()?) as xs:string? external;
-
-(:~ 
-  Adapts a map or array so that retrieval operations retain additional information.
-  '{}
-:)
-declare function fn:pin($input as xs:string) as xs:string external;
+declare function fn:path($node as node()?, $options as map(*)?) as xs:string? external;
 
 (:~ 
   Returns the context position from the dynamic context.
@@ -932,10 +992,10 @@ declare function fn:random-number-generator($seed as xs:anyAtomicType?) as map(*
 declare function fn:remove($input as item()*, $positions as xs:integer*) as item()* external;
 
 (:~ 
-  Returns a string produced from the input string by replacing any substrings that match a given regular expression with a supplied replacement string, provided either literally, or by invoking a supplied function.
+  Returns a string produced from the input string by replacing any segments that match a given regular expression with a supplied replacement string, provided either literally, or by invoking a supplied function.
   '{}
 :)
-declare function fn:replace($value as xs:string?, $pattern as xs:string, $replacement as xs:string?, $flags as xs:string?, $action as (function(xs:untypedAtomic, xs:untypedAtomic*) as item()?)?) as xs:string external;
+declare function fn:replace($value as xs:string?, $pattern as xs:string, $replacement as xs:string, $flags as xs:string?) as xs:string external;
 
 (:~ 
   Produces multiple copies of a sequence.
@@ -962,10 +1022,10 @@ declare function fn:resolve-uri($href as xs:string?, $base as xs:string?) as xs:
 declare function fn:reverse($input as item()*) as item()* external;
 
 (:~ 
-  Returns the root of the tree to which $node belongs. This will usually, but not necessarily, be a document node.
+  Returns the root of the tree to which $node belongs. The function can be applied both to XNodes and to JNodes.
   '{}
 :)
-declare function fn:root($node as node()?) as node()? external;
+declare function fn:root($node as gnode()?) as gnode()? external;
 
 (:~ 
   Rounds a value to a specified number of decimal places, with control over how the rounding takes place.
@@ -980,16 +1040,22 @@ declare function fn:round($value as xs:numeric?, $precision as xs:integer?, $mod
 declare function fn:round-half-to-even($value as xs:numeric?, $precision as xs:integer?) as xs:numeric? external;
 
 (:~ 
-  Produces the complete (ordered) sequence of all partial results from every new value the accumulator is assigned to during the evaluation of fn:fold-left.
+  Produces the sequence of successive partial results from the evaluation of fn:fold-left with the same arguments.
   '{}
 :)
-declare function fn:scan-left($input as item()*, $zero as item()*, $action as function(item()*, item()) as item()*) as array(*)* external;
+declare function fn:scan-left($input as item()*, $init as item()*, $action as function(item()*, item()) as item()*) as array(*)* external;
 
 (:~ 
-  Produces the complete (ordered) sequence of all partial results from every new value the accumulator is assigned to during the evaluation of fn:fold-right.
+  Produces the sequence of successive partial results from the evaluation of fn:fold-right with the same arguments.
   '{}
 :)
-declare function fn:scan-right($input as item()*, $zero as item()*, $action as function(item()*, item()) as item()*) as array(*)* external;
+declare function fn:scan-right($input as item()*, $init as item()*, $action as function(item(), item()*) as item()*) as array(*)* external;
+
+(:~ 
+  Returns a record containing information about a named schema type in the static context.
+  '{}
+:)
+declare function fn:schema-type($name as xs:QName) as map(*) external;
 
 (:~ 
   Returns an xs:dayTimeDuration whose length is a given number of seconds.
@@ -998,10 +1064,10 @@ declare function fn:scan-right($input as item()*, $zero as item()*, $action as f
 declare function fn:seconds($value as xs:decimal?) as xs:dayTimeDuration? external;
 
 (:~ 
-  Returns the seconds component of an xs:dateTime.
+  Returns the seconds component of a value.
   '{}
 :)
-declare function fn:seconds-from-dateTime($value as xs:dateTime?) as xs:decimal? external;
+declare function fn:seconds-from-dateTime($value as xs:string) as xs:decimal? external;
 
 (:~ 
   Returns the number of seconds in a duration.
@@ -1016,10 +1082,22 @@ declare function fn:seconds-from-duration($value as xs:duration?) as xs:decimal?
 declare function fn:seconds-from-time($value as xs:time?) as xs:decimal? external;
 
 (:~ 
+  Inserts a separator between adjacent items in a sequence.
+  '{}
+:)
+declare function fn:sequence-join($input as item()*, $separator as item()*) as item()* external;
+
+(:~ 
   This function serializes the supplied input sequence $input as described in , returning the serialized representation of the sequence as a string.
   '{}
 :)
 declare function fn:serialize($input as item()*, $options as xs:string) as xs:string external;
+
+(:~ 
+  Returns the supplied GNode together with its siblings, in document order.
+  '{}
+:)
+declare function fn:siblings($node as gnode()?) as gnode()* external;
 
 (:~ 
   Returns a sequence containing selected items from a supplied input sequence based on their position.
@@ -1034,22 +1112,22 @@ declare function fn:slice($input as item()*, $start as xs:integer?, $end as xs:i
 declare function fn:some($input as item()*, $predicate as (function(item(), xs:integer) as xs:boolean?)?) as xs:boolean external;
 
 (:~ 
+  Sorts a supplied sequence, based on the value of a sort key supplied as a function.
+  '{}
+:)
+declare function fn:sort($input as item()*, $collation as xs:string?, $key as function(item()) as xs:anyAtomicType*) as item()* external;
+
+(:~ 
   Sorts a supplied sequence, based on the value of a number of sort keys supplied as functions.
   '{}
 :)
-declare function fn:sort($input as item()*, $collations as xs:string*, $keys as (function(item()) as xs:anyAtomicType*)*, $orders as xs:string) as item()* external;
+declare function fn:sort-by($input as item()*, $keys as map(*)) as item()* external;
 
 (:~ 
   Sorts a supplied sequence, according to the order induced by the supplied comparator functions.
   '{}
 :)
 declare function fn:sort-with($input as item()*, $comparators as (function(item(), item()) as xs:integer)*) as item()* external;
-
-(:~ 
-  Returns implementation-dependent information about the current state of execution.
-  '{}
-:)
-declare function fn:stack-trace() as xs:string external;
 
 (:~ 
   Returns true if the string $value contains $substring as a leading substring, taking collations into account.
@@ -1136,16 +1214,22 @@ declare function fn:sum($values as xs:anyAtomicType*, $zero as xs:anyAtomicType?
 declare function fn:tail($input as item()*) as item()* external;
 
 (:~ 
+  Returns items from the input sequence prior to the first one that fails to match a supplied predicate.
+  '{}
+:)
+declare function fn:take-while($input as item()*, $predicate as function(item(), xs:integer) as xs:boolean?) as item()* external;
+
+(:~ 
   Returns the timezone component of an xs:date.
   '{}
 :)
 declare function fn:timezone-from-date($value as xs:date?) as xs:dayTimeDuration? external;
 
 (:~ 
-  Returns the timezone component of an xs:dateTime.
+  Returns the timezone component of a value.
   '{}
 :)
-declare function fn:timezone-from-dateTime($value as xs:dateTime?) as xs:dayTimeDuration? external;
+declare function fn:timezone-from-dateTime($value as xs:string) as xs:dayTimeDuration? external;
 
 (:~ 
   Returns the timezone component of an xs:time.
@@ -1172,10 +1256,10 @@ declare function fn:trace($input as item()*, $label as xs:string?) as item()* ex
 declare function fn:transform($options as map(*)) as map(*) external;
 
 (:~ 
-  Returns all the nodes reachable from a given start node by applying a supplied function repeatedly.
+  Returns all the GNodes reachable from a given start GNode by applying a supplied function repeatedly.
   '{}
 :)
-declare function fn:transitive-closure($node as node()?, $step as function(node()) as node()*) as node()* external;
+declare function fn:transitive-closure($node as gnode()?, $step as function(gnode()) as gnode()*) as gnode()* external;
 
 (:~ 
   Returns $value modified by replacing or removing individual characters.
@@ -1196,10 +1280,16 @@ declare function fn:true() as xs:boolean external;
 declare function fn:trunk($input as item()*) as item()* external;
 
 (:~ 
+  Returns information about the type of a value, as a string.
+  '{}
+:)
+declare function fn:type-of($value as item()*) as xs:string external;
+
+(:~ 
   Returns a dateTime value for a Unix time.
   '{}
 :)
-declare function fn:unix-time($value as xs:integer?) as xs:dateTimeStamp external;
+declare function fn:unix-dateTime($value as xs:nonNegativeInteger?) as xs:dateTimeStamp external;
 
 (:~ 
   Returns the items of $input in an implementation-dependent order.
@@ -1208,22 +1298,28 @@ declare function fn:unix-time($value as xs:integer?) as xs:dateTimeStamp externa
 declare function fn:unordered($input as item()*) as item()* external;
 
 (:~ 
+  The fn:unparsed-binary function reads an external resource (for example, a file) and returns its contents in binary.
+  '{}
+:)
+declare function fn:unparsed-binary($source as xs:string?) as xs:base64Binary? external;
+
+(:~ 
   The fn:unparsed-text function reads an external resource (for example, a file) and returns a string representation of the resource.
   '{}
 :)
-declare function fn:unparsed-text($href as xs:string?, $options as xs:string) as xs:string? external;
+declare function fn:unparsed-text($source as xs:string?, $options as xs:string) as xs:string? external;
 
 (:~ 
   Allows an application to determine whether a call on fn:unparsed-text with particular arguments would succeed.
   '{}
 :)
-declare function fn:unparsed-text-available($href as xs:string?, $options as xs:string) as xs:boolean external;
+declare function fn:unparsed-text-available($source as xs:string?, $options as xs:string) as xs:boolean external;
 
 (:~ 
   The fn:unparsed-text-lines function reads an external resource (for example, a file) and returns its contents as a sequence of strings, one for each line of text in the string representation of the resource.
   '{}
 :)
-declare function fn:unparsed-text-lines($href as xs:string?, $options as xs:string) as xs:string* external;
+declare function fn:unparsed-text-lines($source as xs:string?, $options as xs:string) as xs:string* external;
 
 (:~ 
   Converts a string to upper case.
@@ -1235,7 +1331,7 @@ declare function fn:upper-case($value as xs:string?) as xs:string external;
   Returns a sequence of xs:anyURI values representing the URIs in a URI collection.
   '{}
 :)
-declare function fn:uri-collection($uri as xs:string?) as xs:anyURI* external;
+declare function fn:uri-collection($source as xs:string?) as xs:anyURI* external;
 
 (:~ 
   Absorbs the argument.
@@ -1256,16 +1352,22 @@ declare function fn:while-do($input as item()*, $predicate as function(item()*, 
 declare function fn:xml-to-json($node as node()?, $options as map(*)?) as xs:string? external;
 
 (:~ 
+  Given an XSD schema, delivers a function item that can be invoked to validate a document or element node against this schema.
+  '{}
+:)
+declare function fn:xsd-validator($options as map(*)?) as xs:string external;
+
+(:~ 
   Returns the year component of an xs:date.
   '{}
 :)
 declare function fn:year-from-date($value as xs:date?) as xs:integer? external;
 
 (:~ 
-  Returns the year component of an xs:dateTime.
+  Returns the year component of a value.
   '{}
 :)
-declare function fn:year-from-dateTime($value as xs:dateTime?) as xs:integer? external;
+declare function fn:year-from-dateTime($value as xs:string) as xs:integer? external;
 
 (:~ 
   Returns the number of years in a duration.

@@ -3,7 +3,7 @@
 [npm](https://www.npmjs.com/package/@quodatum/xq-catalogs)
 
 Provides XQuery namespace and module library definitions via JSON format files.
-The standard XPath functions are included, additionally BaseX modules for versions 9 and 10 are provided.
+The standard XPath 3.1 functions are included, additionally BaseX modules for versions 9 and 10 are provided.
 
 
 * [api](https://www)
